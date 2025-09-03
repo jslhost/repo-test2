@@ -1,5 +1,2 @@
 data-pipeline-env/
 data/
-
-model.pkl
-preprocessor.pkl
