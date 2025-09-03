@@ -20,4 +20,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: jslhostdocker/data-pipeline-test:latest
+          tags: jslhostdocker/data-pipeline-test:test
