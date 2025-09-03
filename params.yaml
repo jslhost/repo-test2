@@ -7,3 +7,4 @@ data:
     - CustomerId
 model:
   path: model.pkl
+  preprocessor_path: preprocessor.pkl
