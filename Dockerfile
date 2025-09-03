@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y make && rm -rf /var/lib/apt/lists/*
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+COPY model.pkl preprocessor.pkl params.yaml ./
 COPY . .
 
 # Remplace les fins de ligne CRLF vers LF (règle bug de permission)
