@@ -3,6 +3,13 @@ from pydantic import BaseModel
 from pickle import load
 import pandas as pd
 from src.utils import load_params
+from fastapi.middleware.cors import CORSMiddleware
+
+origins = [
+    "https://jslhost.github.io",  # Adresse GitHub Pages, à modifier avec votre identifiant github
+    "http://localhost:8000",  # autorise les tests locaux
+]
+
 
 params = load_params()
 model_path = params["model"]["path"]
@@ -28,10 +35,20 @@ class CustomerData(BaseModel):
     IsActiveMember: int
     EstimatedSalary: float
 
+
 app = FastAPI(
     title="Prédiction de Churn",
     description="Application de prédiction de Churn 💸 <br>Une version par API pour faciliter la réutilisation du modèle 🚀",
 )
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    max_age=3600,
+)
+
 
 @app.post("/predict", tags=["Predict"])
 async def predict(data: CustomerData) -> str:
