@@ -49,11 +49,11 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     env:
-      AWS_REGION: ${{ vars.AWS_REGION }}
-      EKS_CLUSTER_NAME: ${{ vars.EKS_CLUSTER_NAME }} # ml-pipeline-prod
-      K8S_NAMESPACE: ${{ vars.K8S_NAMESPACE }} # ml-pipeline
-      K8S_DEPLOYMENT: ${{ vars.K8S_DEPLOYMENT }} # ml-api
-      K8S_CONTAINER: ${{ vars.K8S_CONTAINER }} # api
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      EKS_CLUSTER_NAME: ${{ secrets.EKS_CLUSTER_NAME }} # ml-pipeline-prod
+      K8S_NAMESPACE: ${{ secrets.K8S_NAMESPACE }} # ml-pipeline
+      K8S_DEPLOYMENT: ${{ secrets.K8S_DEPLOYMENT }} # ml-api
+      K8S_CONTAINER: ${{ secrets.K8S_CONTAINER }} # api
       IMAGE: jslhostdocker/data-pipeline-test:${{ needs.build-and-push.outputs.image_tag }}
     steps:
       - name: Configure AWS credentials via OIDC
