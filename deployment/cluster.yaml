@@ -4,7 +4,7 @@ kind: ClusterConfig
 metadata:
   name: ml-pipeline-prod # le nom de notre cluster
   region: us-east-1 # la région, à modifier si besoin
-  version: "1.30" # la version de kubernetes utilisée
+  version: "1.33" # la version de kubernetes utilisée
 
 iam:
   withOIDC: true # OICD = OpenID Connect -> sécurise le cluster

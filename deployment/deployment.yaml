@@ -20,5 +20,6 @@ spec:
       containers:
         - name: api
           image: jslhostdocker/data-pipeline-test:test # on spécifie l'image docker, à modifier avec la votre
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000 # correspond au port par défaut de FastAPI
