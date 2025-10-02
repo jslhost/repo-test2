@@ -4,6 +4,11 @@ on:
   push:
     branches: [main] # change si ta branche par defaut n est pas main
 
+# Permissions minimales pour OIDC vers AWS
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   build-and-push:
     name: Build and push image to Docker Hub
@@ -39,16 +44,16 @@ jobs:
             jslhostdocker/data-pipeline-test:latest
           # optionnel: platforms: linux/amd64,linux/arm64
 
-    deploy:
+  deploy:
     name: Deploy to EKS
     needs: build-and-push
     runs-on: ubuntu-latest
     env:
       AWS_REGION: ${{ vars.AWS_REGION }}
-      EKS_CLUSTER_NAME: ${{ vars.EKS_CLUSTER_NAME }} #ml-pipeline-prod
-      K8S_NAMESPACE: ${{ vars.K8S_NAMESPACE }}     # ml-pipeline
-      K8S_DEPLOYMENT: ${{ vars.K8S_DEPLOYMENT }}   # ml-api
-      K8S_CONTAINER: ${{ vars.K8S_CONTAINER }}     # api
+      EKS_CLUSTER_NAME: ${{ vars.EKS_CLUSTER_NAME }} # ml-pipeline-prod
+      K8S_NAMESPACE: ${{ vars.K8S_NAMESPACE }} # ml-pipeline
+      K8S_DEPLOYMENT: ${{ vars.K8S_DEPLOYMENT }} # ml-api
+      K8S_CONTAINER: ${{ vars.K8S_CONTAINER }} # api
       IMAGE: jslhostdocker/data-pipeline-test:${{ needs.build-and-push.outputs.image_tag }}
     steps:
       - name: Configure AWS credentials via OIDC
@@ -59,12 +64,14 @@ jobs:
 
       - name: Install kubectl
         uses: azure/setup-kubectl@v4
+        with:
+          version: latest
 
       - name: Configure kubeconfig for EKS
         run: aws eks update-kubeconfig --name "$EKS_CLUSTER_NAME" --region "$AWS_REGION"
 
       - name: Set image and rollout
         run: |
-          kubectl -n "$K8S_NAMESPACE" set image deployment/$K8S_DEPLOYMENT \
+          kubectl -n "$K8S_NAMESPACE" set image deploy/$K8S_DEPLOYMENT \
             $K8S_CONTAINER="$IMAGE" --record
-          kubectl -n "$K8S_NAMESPACE" rollout status deployment/$K8S_DEPLOYMENT --timeout=5m
+          kubectl -n "$K8S_NAMESPACE" rollout status deploy/$K8S_DEPLOYMENT --timeout=5m
