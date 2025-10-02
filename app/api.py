@@ -58,7 +58,9 @@ async def predict(data: CustomerData) -> str:
     preprocessed_data = preprocessor.transform(df)
 
     prediction = (
-        "Exited" if int(model.predict(preprocessed_data)) == 1 else "Not Exited"
+        "Client Exited"
+        if int(model.predict(preprocessed_data)) == 1
+        else "Client Not Exited"
     )
 
-    return prediction, "test MAJ!!"
+    return prediction
