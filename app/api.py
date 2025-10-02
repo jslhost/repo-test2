@@ -61,4 +61,4 @@ async def predict(data: CustomerData) -> str:
         "Exited" if int(model.predict(preprocessed_data)) == 1 else "Not Exited"
     )
 
-    return prediction, "test MAJ!"
+    return prediction, "test MAJ!!"
