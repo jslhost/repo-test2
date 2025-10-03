@@ -1,12 +1,12 @@
 {
-  "CallerReference": "ml-api-1759420896",
+  "CallerReference": "ml-api-1759486492",
   "Comment": "EKS ML API via CloudFront",
   "Enabled": true,
   "Origins": {
     "Quantity": 1,
     "Items": [{
       "Id": "ml-api-origin",
-      "DomainName": "a9d9cae33e30e4fde96dc907755a5c59-1545909174.us-east-1.elb.amazonaws.com",
+      "DomainName": "a135db68995ad4f50a283a77596bb38d-772084353.us-east-1.elb.amazonaws.com",
       "CustomOriginConfig": {
         "HTTPPort": 80, 
         "HTTPSPort": 443, 
