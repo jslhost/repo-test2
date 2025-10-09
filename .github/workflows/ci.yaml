@@ -2,15 +2,15 @@ name: ci-cd
 
 on:
   push:
-    branches: [main] # change si ta branche par defaut n est pas main
+    branches: [main] # change si ta branche par defaut n'est pas main
 
-# Permissions minimales pour OIDC vers AWS
+
 permissions:
   contents: read
-  id-token: write
+  id-token: write # Permissions minimales pour OIDC vers AWS
 
 jobs:
-  build-and-push:
+  build-and-push: # MàJ Image Docker
     name: Build and push image to Docker Hub
     runs-on: ubuntu-latest
     outputs:
@@ -42,7 +42,7 @@ jobs:
           tags: |
             jslhostdocker/data-pipeline-test:${{ steps.meta.outputs.tag }}
             jslhostdocker/data-pipeline-test:latest
-          # optionnel: platforms: linux/amd64,linux/arm64
+
 
   deploy:
     name: Deploy to EKS
